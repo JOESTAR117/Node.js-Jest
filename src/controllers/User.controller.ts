@@ -1,19 +1,21 @@
 import { Request, Response } from 'express'
 import { database } from '../database/user'
 
-const getAllUsers = (req: Request, res: Response) => {
-	return res.status(200).json({ users: database })
+class UsersController {
+  criarUsuario (request: Request, response: Response): Response {
+    const { name } = request.body
+  
+    if(name.length < 1){
+      return response.status(403).json({mensagem: 'Não é possível criar usuários sem um nome'})
+    }
+  
+    database.push(name)
+    return response.status(201).json({'mensagem': `Usuário ${name} criado`})
+  }
+
+  listarUsuario (request: Request, response: Response): Response {
+    return response.status(200).json(database)
+  }
 }
 
-const createUser = (req: Request, res: Response) => {
-	const { name }:any = req.body
-
-	if (name.length < 1) {
-		return res.status(403).json({ message: 'fill in the blank field' })
-	}
-
-	database.push(name)
-	return res.status(201).json(name)
-}
-
-export { getAllUsers, createUser }
+export{UsersController}

@@ -1,16 +1,11 @@
-import { Request, Response } from 'express'
-import { getAllUsers, createUser } from '../controllers/User.controller'
-
-const { Router } = require('express')
+import { Router } from 'express'
+import { UsersController } from '../controllers/User.controller'
 
 const routes = Router()
+const usersController = new UsersController()
 
-routes.get('/', (req: Request, res: Response) => {
-    res.send('Hello World!')
-})
+routes.get('/users', usersController.listarUsuario)
 
-routes.get('/users', getAllUsers)
+routes.post('/users/register', usersController.criarUsuario)
 
-routes.post('/users/register', createUser)
-
-export default routes
+export { routes }
