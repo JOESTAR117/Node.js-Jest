@@ -2,7 +2,9 @@ const { Router } = require('express')
 
 const routes = Router()
 
-const database = ['Jackson Rios']
+const database = [{
+	name: 'Jackson Rios'
+}]
 
 routes.get('/', (req, res) => {
 	res.send('Hello World!')
@@ -14,7 +16,7 @@ routes.get('/users', (req, res) => {
 
 routes.post('/users/register', (req, res) => {
 	const name = req.body
-
+	database.push(name)
 	return res.status(201).json(name)
 })
 
